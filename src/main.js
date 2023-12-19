@@ -19,5 +19,5 @@ console.log('\x1b[34mHANDLING ALL COMMANDS\x1b[0m')
 require('./handlers/Commands.js').run(client)
 
 console.log('\x1b[34mHANDLING ALL SLASH COMMANDS\x1b[0m')
-require('./handlers/SlashCommands.js')
+require('./handlers/SlashCommands.js').run(client)
 console.log(' ')
