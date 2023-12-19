@@ -34,9 +34,7 @@ module.exports = {
         if (!user) return '!User'
 
         // do all things and run callback
-        db.each(`SELECT * FROM users WHERE id=${user.id}`, (err, r) => {
-            cb(r)
-        })
+        db.each(`SELECT * FROM users WHERE id=${user.id}`, cb)
     },
     /**
     * @param {Object} user - Somebody user
