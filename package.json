@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Algostiny/skelly#readme",
   "dependencies": {
     "discord.js": "^14.14.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "sqlite3": "^5.1.6"
   }
 }

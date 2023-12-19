@@ -6,6 +6,7 @@ module.exports = {
         .setDescription('See all items you own')
         .setNameLocalization('pt-BR', 'inventario')
         .setDescriptionLocalization('pt-BR', 'Veja todos itens que você possui')
+        // page option
         .addIntegerOption(option => 
             option
             .setName('page')
@@ -13,6 +14,7 @@ module.exports = {
             .setNameLocalization('pt-BR', 'pagina')
             .setDescription('pt-BR', 'A página do seu inventário')
         )
+        // private option
         .addBooleanOption(option =>
             option
             .setName('private')
