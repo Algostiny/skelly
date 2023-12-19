@@ -6,10 +6,6 @@
   "scripts": {
     "test": "node src/main.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Algostiny/skelly.git"
-  },
   "keywords": [
     "rpg",
     "discord.js",
