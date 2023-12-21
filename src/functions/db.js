@@ -30,11 +30,13 @@ module.exports = {
     * @param {Number} user.id - Somebody user id
     * @param {Function} cb - Callback 
     */
-    getInfo: async (user, cb) => {
+    getInfo: async (user, callback) => {
         if (!user) return '!User'
 
         // do all things and run callback
-        db.each(`SELECT * FROM users WHERE id=${user.id}`, cb)
+        db.all(`SELECT * FROM users WHERE id=${user.id}`, (err, r)=>{
+            callback(err,r)
+        })
     },
     /**
     * @param {Object} user - Somebody user
@@ -48,14 +50,16 @@ module.exports = {
 
         // make the query
         var query = 'UPDATE users SET'
-        if (inv && powers) query = query + `inv = ${inv}, powers = ${powers}`
-        else if (inv) query = query + `inv = ${inv}`
-        else if (powers) query = query + `powers = ${powers}`
-        query = query + `WHERE id = ${user.id}`
+        if (inv && powers) query = query + ` inv="${inv}", powers="${powers}"`
+        else if (inv) query = query + ` inv="${inv}"`
+        else if (powers) query = query + ` powers="${powers}"`
+        query = query + ` WHERE id="${user.id}"`
 
         // execute the query
         const q = db.prepare(query)
-        q.run()
+        q.run((err)=>{
+            if(err)console.error(err)
+        })
         q.finalize()
 
         return 200
