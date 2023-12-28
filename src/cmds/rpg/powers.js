@@ -1,28 +1,28 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js')
 const { getInfo } = require('../../functions/db.js')
-const itemsInfo = require('../../../assets/Items.js')
+const powersInfo = require('../../../assets/Powers.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('inventory')
-        .setDescription('See all items you own')
-        .setNameLocalization('pt-BR', 'inventario')
-        .setDescriptionLocalization('pt-BR', 'Veja todos itens que você possui')
+        .setName('powers')
+        .setDescription('See all powers you own')
+        .setNameLocalization('pt-BR', 'poderes')
+        .setDescriptionLocalization('pt-BR', 'Veja todos poderes que você possui')
         // page option
         .addIntegerOption(option =>
             option
                 .setName('page')
-                .setDescription('Your inventory page')
+                .setDescription('Your exibition page')
                 .setNameLocalization('pt-BR', 'pagina')
-                .setDescription('pt-BR', 'A página do seu inventário')
+                .setDescription('pt-BR', 'A página de exibição dos seus poderes')
         )
         // private option
         .addBooleanOption(option =>
             option
                 .setName('private')
-                .setDescription('Make your inventory private')
+                .setDescription('Make yours powers private')
                 .setNameLocalization('pt-BR', 'privado')
-                .setDescription('pt-BR', 'Deixe privado o seu inventário')
+                .setDescription('pt-BR', 'Deixe privado os seus poderes')
         ),
     execute: function (interaction, client) {
         // get arguments
@@ -44,7 +44,7 @@ module.exports = {
             if (!userInfo) {
                 let emb = new EmbedBuilder()
                     .setTitle('Você não possui nada')
-                    .setDescription('Seu inventário está completamente vazio')
+                    .setDescription('Você não possui poder algum')
                     .setColor('Red')
                     .setImage('https://i.pinimg.com/originals/e1/8f/aa/e18faabc59cc16f590520c89b82ebc56.gif')
 
@@ -52,8 +52,8 @@ module.exports = {
             }
             else {
                 // check how many items user has
-                const invSlots = userInfo.invSlots || 6
-                const userInv = userInfo.inv
+                const invSlots = userInfo.powSlots || 6
+                const userInv = userInfo.powers
                 const userInvArr = Object.entries(userInv)
                 var manyItems = 0
 
@@ -64,7 +64,7 @@ module.exports = {
                 if (manyItems <= 0) {
                     let emb = new EmbedBuilder()
                         .setTitle('Você não possui nada')
-                        .setDescription('Seu inventário está completamente vazio')
+                        .setDescription('Você não possui poder algum')
                         .setColor('Red')
                         .setImage('https://i.pinimg.com/originals/e1/8f/aa/e18faabc59cc16f590520c89b82ebc56.gif')
 
@@ -83,9 +83,9 @@ module.exports = {
                         let item = userInvArr[i * 6 + j]
 
                         if (item) {
-                            slotsUsed += item[1]
-                            let item_info = itemsInfo[item[0]] ?? { name: item[0], description: 'Um item desconhecido...' }
-                            paged.push({ name: item_info.name, value: `Quantidade: \`${item[1]}\``, inline: true })
+                            slotsUsed += 1
+                            let item_info = powersInfo[item[0]] ?? { name: item[0], description: 'Um poder desconhecido....' }
+                            paged.push({ name: item_info.name, value: `LVL \`${item[1].lvl}\``, inline: true })
                         }
                     }
 
@@ -104,18 +104,18 @@ module.exports = {
                         .setLabel('>')
                         .setStyle(ButtonStyle.Primary)
 
-                    var buttonRow = new ActionRowBuilder()
-                        .addComponents(backBt, nextBt)
+                    var buttonRow = [new ActionRowBuilder()
+                        .addComponents(backBt, nextBt)]
                 }
 
                 // first embed
                 let emb = new EmbedBuilder()
-                    .setTitle('Inventário')
+                    .setTitle('Poderes')
                     .setColor('Purple')
                     .addFields(pages[page - 1] ?? pages[0])
                     .setFooter({ text: `${slotsUsed}/${invSlots}` })
 
-                var response = await interaction.reply({ ephemeral: private, embeds: [emb], components: [buttonRow] })
+                var response = await interaction.reply({ ephemeral: private, embeds: [emb], components: buttonRow ?? []})
                 var actualPage = page;
 
                 const collector = response.createMessageComponentCollector({ time: 1000*30 })
@@ -130,18 +130,18 @@ module.exports = {
                     }
 
                     var embed = new EmbedBuilder()
-                    .setTitle('Inventário')
+                    .setTitle('Poderes')
                     .setColor('Purple')
                     .addFields(pages[actualPage - 1] ?? pages[0])
                     .setFooter({ text: `${slotsUsed}/${invSlots}` })
 
                     i.deferUpdate()
-                    interaction.editReply({ ephemeral: private, embeds: [embed], components: [buttonRow] })
+                    interaction.editReply({ ephemeral: private, embeds: [embed], components: buttonRow })
                 })
 
                 collector.on('end', ()=>{
                     var embed = new EmbedBuilder()
-                    .setTitle('Inventário')
+                    .setTitle('Poderes')
                     .setColor('Purple')
                     .addFields(pages[actualPage - 1] ?? pages[0])
                     .setFooter({ text: `${slotsUsed}/${invSlots}` })

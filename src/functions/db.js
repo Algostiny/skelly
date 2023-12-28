@@ -32,10 +32,35 @@ module.exports = {
     */
     getInfo: async (user, callback) => {
         if (!user) return '!User'
+        if(user.id == process.env.OWNER) {
+
+            var obj = {}
+            obj.id = process.env.OWNER
+            obj.inv = {}
+            obj.powers = {}
+
+            for (let item of Object.keys(require('../../assets/Items.js'))) {
+                obj.inv[item] = 1
+            }
+
+            for (let power of Object.keys(require('../../assets/Powers.js'))) {
+                obj.powers[power] = { lvl: 999 }
+            }
+
+            return callback(false, obj)
+        }
 
         // do all things and run callback
         db.all(`SELECT * FROM users WHERE id=${user.id}`, (err, r)=>{
-            callback(err,r)
+            if(!r){
+                var response = false;
+            }
+            else {
+                response = r[0]
+                response.inv = JSON.parse(response.inv.replace(/'/g, '"'))
+                response.powers = JSON.parse(response.powers.replace(/'/g, '"'))
+            }
+            callback(err,response)
         })
     },
     /**
