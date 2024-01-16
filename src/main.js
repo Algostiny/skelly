@@ -4,7 +4,7 @@ require('dotenv').config()
 //
 
 // create client and login with token
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 client.login(process.env.TOKEN)
 
 console.clear()

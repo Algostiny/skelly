@@ -23,8 +23,8 @@ module.exports = {
         "name": "Paw Paw",
         "description": "toma patada violenta"
     },
-    "krmt":{
-        "name": "Kermito",
+    "soru":{
+        "name": "Soru Soru no Mi",
         "description": "eu amo dar o fiofó"
     },
     "gomu":{

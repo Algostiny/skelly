@@ -27,10 +27,10 @@ module.exports = {
         const target = interaction.options.getUser('target') ?? interaction.user
 
         // calc the percentage
-        const randomness_multiplier = 4;
+        const randomness_multiplier = 6;
 
         let result = `${target.id}`
-        result = parseInt(`${result[0]}${result[5]}`) * randomness_multiplier * Math.floor(Date.now() / (1000 * 3600 * 24 * 7))
+        result = parseInt(`${result[0]}${result[2]}${result[5]}${result[1]}`) * randomness_multiplier * Math.floor(Date.now() / (1000 * 3600 * 24 * 7))
         result = `${result}`
         result = parseInt(`${result[0]}${result[1]}`)
         if (result == 38) result = 100

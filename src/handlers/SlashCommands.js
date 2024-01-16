@@ -27,7 +27,7 @@ module.exports.run = async (client) => {
 
         for (let folder of commandsFolders) {
             const folderPath = path.join(commandsPath, folder)
-            const commandsFiles = fs.readdirSync(folderPath).filter(f => f.endsWith('.js') && !f.startsWith('_'))
+            const commandsFiles = fs.readdirSync(folderPath).filter(f => f.endsWith('.js') && !f.startsWith('_') && !f.endsWith('_.js'))
 
             for (let file of commandsFiles) {
                 const filePath = path.join(folderPath, file)
