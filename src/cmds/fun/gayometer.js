@@ -27,7 +27,7 @@ module.exports = {
         const target = interaction.options.getUser('target') ?? interaction.user
 
         // calc the percentage
-        const randomness_multiplier = 6;
+        const randomness_multiplier = 43;
 
         let result = `${target.id}`
         result = parseInt(`${result[0]}${result[2]}${result[5]}${result[1]}`) * randomness_multiplier * Math.floor(Date.now() / (1000 * 3600 * 24 * 7))
@@ -44,7 +44,6 @@ module.exports = {
         .setImage(specialPics[target.id] ?? img)
         .setColor('Random')
         
-        console.log(emb)
         interaction.reply({ embeds: [emb]})
     }
 }

@@ -51,7 +51,7 @@ module.exports.run = async (client) => {
             { body: commands }
         )
 
-        console.log(`\x1b[32m[SUCESS]\x1b[0m LOADED ${data.length} COMMANDS`)
+        console.log(`\x1b[32m[SUCESS]\x1b[0m LOADED ${data.length} SLASH COMMANDS`)
     } catch (error) {
         console.log(`\x1b[31m[WARNING]\x1b[0m`)
         console.error(error)

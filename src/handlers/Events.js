@@ -1,4 +1,5 @@
 // import area
+const usersBlocked = {}
 
 // export exec property
 
@@ -12,7 +13,7 @@ module.exports.run = (client) => {
 
     // INTERACTION CREATE
     client.on('interactionCreate', async interaction => {
-        if (!interaction.isChatInputCommand()) return // filter slash command
+        if (!interaction.isChatInputCommand() || usersBlocked[interaction.user.id]) return // filter slash command and users blocked
         const cmd = client.commands.get(interaction.commandName)
 
         if (cmd) cmd.execute(interaction, client)
@@ -22,7 +23,7 @@ module.exports.run = (client) => {
     // MESSAGE CRATE
     client.on('messageCreate', async msg => {
         if (!msg.content.startsWith(process.env.PREFIX)) return // check if the msg starts with the prefix
-        if (msg.author.bot) return // return if the author is a bot
+        if (msg.author.bot || usersBlocked[msg.author.id]) return // return if the author is a bot or user blocked
 
         let msg_array = msg.content.slice(1).split(' ')
         let cmd = msg_array[0]
@@ -39,4 +40,17 @@ module.exports.run = (client) => {
     })
 
     console.log(`\x1b[32m[SUCESS]\x1b[0m interactionCreate`)
+
+    require('../functions/db.js').exportAllBlock((err,r) => {
+        if(err) process.exit()
+        
+        for (let user of r) {
+            usersBlocked[user.id] = true;    
+        }
+
+        console.log(`\x1b[32m[SUCESS]\x1b[0m usersBlocked`)
+    })
 }
+
+module.exports.blockUser = (id) => {usersBlocked[id] = true}
+module.exports.unblockUser = (id) => {usersBlocked[id] = false}

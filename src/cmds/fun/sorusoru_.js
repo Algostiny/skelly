@@ -34,6 +34,11 @@ module.exports = {
         name: "sorusoru",
         description: powerInfo.description,
         aliases: ["soru"],
+        options: [
+            {
+                name: 'target | "lod"'
+            }
+        ],
         prefixed: true
     },
     execute: async function (msg, args, client) {
@@ -42,28 +47,7 @@ module.exports = {
             return
         }
 
-        if (args.length <= 0){
-            var movesField = ''
-            let movesList = Object.keys(powerInfo.moves)
-            for (let move of movesList) {
-                let moveInfo = powerInfo.moves[move]
-                movesField += `\`${process.env.PREFIX}${moveInfo.usage}\` - ${moveInfo.description}\n`
-            }
-
-            let emb = new EmbedBuilder()
-            .setTitle('SORU SORU NO MI')
-            .setDescription(powerInfo.description)  
-            .setImage(powerInfo.imgs.pose())
-            .setColor(powerInfo.color())
-            .addFields({
-                name: 'PODERES',
-                value: movesField
-            })
-            .setFooter({text: '[arg] opcional | (arg) obrigatório'})
-
-            msg.channel.send({ embeds: [emb] })
-        }
-        else if(args[0] == 'lod' || args[0] == 'lifeordeath') {
+        if(args[0] == 'lod' || args[0] == 'lifeordeath') {
             let target = msg.mentions.members.first();
             if (!target) {
                 let emb = new EmbedBuilder()
@@ -95,7 +79,6 @@ module.exports = {
             //
 
             let r = await msg.reply({ embeds: [emb], content: `<@${target.id}>`, components: [btRow] })
-            console.log()
             let collectorFilter = m => m.user.id === target.id
             const collector = r.createMessageComponentCollector({componentType: ComponentType.Button, filter: collectorFilter, time: 15_000, max: 1})
             var collected = false;
@@ -117,12 +100,33 @@ module.exports = {
                 }
             })
         }
-        else {
+        else if(args[0] == 'atk' || args[0] == 'attack'){
             let emb = new EmbedBuilder()
             .setTitle('SORU SORU NO MI')
-            .setDescription(`${msg.author} atacou ${args.join(' ')}`.substring(0,500))  
+            .setDescription(`${msg.author} atacou ${args.slice(1).join(' ')}`.substring(0,500))  
             .setImage(powerInfo.imgs.attack())
             .setColor(powerInfo.color())
+
+            msg.channel.send({ embeds: [emb] })
+        }
+        else{
+            var movesField = ''
+            let movesList = Object.keys(powerInfo.moves)
+            for (let move of movesList) {
+                let moveInfo = powerInfo.moves[move]
+                movesField += `\`${process.env.PREFIX}${moveInfo.usage}\` - ${moveInfo.description}\n`
+            }
+
+            let emb = new EmbedBuilder()
+            .setTitle('SORU SORU NO MI')
+            .setDescription(powerInfo.description)  
+            .setImage(powerInfo.imgs.pose())
+            .setColor(powerInfo.color())
+            .addFields({
+                name: 'PODERES',
+                value: movesField
+            })
+            .setFooter({text: '[arg] opcional | (arg) obrigatório'})
 
             msg.channel.send({ embeds: [emb] })
         }

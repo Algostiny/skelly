@@ -9,7 +9,7 @@ module.exports = {
         moves: {
             attack: {
                 description: "Ataque algum alvo",
-                usage: "soru (alvo)"
+                usage: "soru atk (alvo)"
             },
             lifeordeath: {
                 description: "Coloque a vida de alguém em jogo",
