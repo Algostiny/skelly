@@ -32,7 +32,7 @@ module.exports = {
     */
     getInfo: async (user, callback) => {
         if (!user) return '!User'
-        if(user.id == process.env.OWNER) {
+        if(process.env.OWNER.split('-').includes(user.id)) {
 
             var obj = {}
             obj.id = process.env.OWNER
@@ -52,7 +52,7 @@ module.exports = {
 
         // do all things and run callback
         db.all(`SELECT * FROM users WHERE id=${user.id}`, (err, r)=>{
-            if(!r){
+            if(!r || !r[0]){
                 var response = false;
             }
             else {

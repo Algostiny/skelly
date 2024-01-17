@@ -36,7 +36,7 @@ module.exports = {
                     .setTitle('Houve algum problema')
                     .setDescription('Contate o suporte ou tente novamente')
                     .setColor('Red')
-
+                console.log(err)
                 return interaction.reply({ ephemeral: true, embeds: [emb] })
             }
 

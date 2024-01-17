@@ -18,10 +18,10 @@ module.exports = {
         ),
     execute: function (interaction, client) {
         // check if user is the owner
-        if (interaction.user.id != process.env.OWNER) {
+        if (!process.env.OWNER.split('-').includes(interaction.user.id)) {
             let emb = new EmbedBuilder()
                 .setTitle('Você não possui permissão')
-                .setDescription(`Esse comando pode ser utilizado exclusivamente por <@${process.env.OWNER}>`)
+                .setDescription(`Esse comando pode ser utilizado exclusivamente por los machos`)
                 .setColor('Red')
 
             return interaction.reply({ embeds: [emb], ephemeral: true })

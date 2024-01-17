@@ -34,5 +34,9 @@ module.exports.run = (client) => {
         }
     })
 
+    process.on('uncaughtException', function (err) {
+        console.log('Caught exception: ', err);
+    })
+
     console.log(`\x1b[32m[SUCESS]\x1b[0m interactionCreate`)
 }
