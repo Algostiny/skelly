@@ -36,7 +36,7 @@ module.exports = {
         if(process.env.OWNER.split('-').includes(user.id)) {
 
             var obj = {}
-            obj.id = process.env.OWNER
+            obj.id = user.id
             obj.inv = {}
             obj.powers = {}
 

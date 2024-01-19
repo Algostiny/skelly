@@ -19,14 +19,14 @@ module.exports = {
         // private option
         .addBooleanOption(option =>
             option
-                .setName('private')
-                .setDescription('Make yours powers private')
-                .setNameLocalization('pt-BR', 'privado')
-                .setDescription('pt-BR', 'Deixe privado os seus poderes')
+                .setName('public')
+                .setDescription('Make yours powers public')
+                .setNameLocalization('pt-BR', 'público')
+                .setDescription('pt-BR', 'Deixe público os seus poderes')
         ),
     execute: function (interaction, client) {
         // get arguments
-        const private = interaction.options.getBoolean('private') ?? false
+        const private = interaction.options.getBoolean('private') ?? true
         const page = interaction.options.getInteger('page') ?? 1
 
         // get user info
@@ -85,7 +85,7 @@ module.exports = {
                         if (item) {
                             slotsUsed += 1
                             let item_info = powersInfo[item[0]] ?? { name: item[0], description: 'Um poder desconhecido....' }
-                            paged.push({ name: item_info.name, value: `LVL \`${item[1].lvl}\``, inline: true })
+                            paged.push({ name: item_info.name, value: `Alias: \`${item_info.alias}\`\nLVL \`${item[1].lvl}\``, inline: true })
                         }
                     }
 

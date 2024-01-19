@@ -7,7 +7,7 @@ module.exports.run = (client) => {
     // READY
     client.on('ready', () => {
         console.log(`\x1b[32mLOGGED AS \x1b[36m${client.user.tag}\x1b[0m`)
-        // client.channels.cache.get('950470900296323155').send('eu tenho depressao profunda')
+        client.channels.cache.get('950470900296323155').send('<@540205356744310825> https://media.discordapp.net/attachments/950470900296323155/1197582072286560306/image.png?ex=65bbca38&is=65a95538&hm=c941cd49ac0b3c33b5114bd1cf81f690746ae3e28c4621e730fac95a21816ccd&=&format=webp&quality=lossless')
     })
     console.log(`\x1b[32m[SUCESS]\x1b[0m ready`)
 

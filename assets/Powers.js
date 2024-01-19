@@ -5,6 +5,7 @@ function randArrayElement(arr) {
 module.exports = {
     soru:{
         name: "Soru Soru no Mi",
+        alias: "soru",
         description: "LIFE OR DEATH??",
         moves: {
             attack: {
