@@ -4,6 +4,7 @@ const path = require('path')
 const {REST, Routes, Collection} = require('discord.js')
 const rest = new REST().setToken(process.env.TOKEN)
 
+
 module.exports.run = (client) => {
     fs.readdir(path.join(__dirname, '../cmds/'), (err, folders) => {
         if (err) return console.error(err);
@@ -16,6 +17,7 @@ module.exports.run = (client) => {
 
             for (let file of files) {
                 if (!file.endsWith('.js')) continue;
+                if (file.endsWith('_.js')) continue;
 
                 let info = require(path.join(`../cmds/${folder}/${file}`))
                 commands.push(info.data.toJSON())

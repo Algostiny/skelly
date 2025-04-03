@@ -51,11 +51,12 @@ module.exports = {
 
         switch (subcmd) {
             case 'penis':
-                id = parseInt(`${target.id}`.slice(-2)) * process.env.SEED
+                id = parseInt(`${parseInt(target.id.slice(-2))+parseInt(process.env.SEED)}`.slice(-2))
+                // console.log(id)
                 response = `${target} tem um ${['pepino','manguço','varote','menino','cabeçote','rifle'][Math.floor(Math.random()*6)]} de ${Math.round(id/3)}cm\n\nSeria desse tamanho: 8${'='.repeat(Math.floor(id*0.1))}D`
                 break;
             case 'gaymeter':
-                id = ((parseInt(`${target.id}`.slice(-8)) * process.env.SEED) * 0.000001)
+                id = (parseInt(`${parseInt(target.id.slice(-8))+parseInt(process.env.SEED)}`.slice(-8)) * 0.000001)
                 let phrase = Math.floor(id / 25)
                 response = [
                     `%target% é um ${['cabra macho', 'homem', 'Homem', 'machão', 'mulherengo'][Math.floor(Math.random()*5)]}, sendo %percentage%% homossexual`,
