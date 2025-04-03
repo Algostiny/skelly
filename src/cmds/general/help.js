@@ -14,11 +14,12 @@ module.exports = {
     ),
 
     execute (client, interaction) {
-        console.log(Object.values(client.commands))
-    
+        let fields = []
+
         let emb = new EmbedBuilder()
         .setTitle('Ajuda')
         .setDescription(`Caso queira ajuda com algum comando, utilize \`/ajuda <comando>\``)
+        .addFields()
 
         interaction.reply({ embeds: [emb] })
     }

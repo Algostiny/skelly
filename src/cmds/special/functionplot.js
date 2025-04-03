@@ -32,7 +32,7 @@ module.exports = {
                 // Send the image in Discord
                 await interaction.reply({
                     files: [attachment],
-                    content: 'grafico',
+                    content: 'grafico.png',
                 });
             } catch (error) {
                 console.error('Error sending image:', error);

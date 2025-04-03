@@ -4,7 +4,6 @@ const path = require('path')
 const {REST, Routes, Collection} = require('discord.js')
 const rest = new REST().setToken(process.env.TOKEN)
 
-
 module.exports.run = (client) => {
     fs.readdir(path.join(__dirname, '../cmds/'), (err, folders) => {
         if (err) return console.error(err);

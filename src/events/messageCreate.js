@@ -8,19 +8,19 @@ module.exports = {
         let triggers = require('../cmds/special/trigger.js').exportTriggers(msg.guild.id)
         if (msg.author.bot) return;
         if (triggers) {
-            ;
 
             let triggers_keys = Object.keys(triggers)
             for (let i = 0; i < triggers_keys.length; i++) {
                 let trigger = triggers[triggers_keys[i]]
 
-                if (msg.content.indexOf(triggers_keys[i]) != -1 && Math.random() * 100 <= trigger.probability && (!cooldownTrigger[msg.author.id] || -cooldownTrigger[msg.author.id] + Date.now() > 1000 * 5)) {
+                if ((!trigger.user || trigger.user==msg.author.id) && msg.content.indexOf(triggers_keys[i]) != -1 && Math.random() * 100 <= trigger.probability && (!cooldownTrigger[msg.author.id] || cooldownTrigger[msg.author.id] < Date.now())) {
                     msg.reply({ content: trigger.msg })
-                    cooldownTrigger[msg.author.id] = Date.now()
+                    cooldownTrigger[msg.author.id] = Date.now() + (trigger.cooldown*1000 || 5*1000)
                     break;
                 }
             }
         }
+
         //
 
         if (msg.author.id == process.env.OWNERID && msg.content.indexOf('<ia>') != -1) {

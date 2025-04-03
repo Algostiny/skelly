@@ -32,6 +32,14 @@ module.exports = {
             .setDescription('The chance of activate the tag; DEFAULT = 100%')
             .setDescriptionLocalization('pt-BR','A chance de ativar a mensagem; DEFAULT = 100%')
         )
+        .addIntegerOption( option =>
+            option.setName('cooldown')
+            .setDescription('Cooldown to activate; DEFAULT = 5s')
+        )
+        .addUserOption(option =>
+            option.setName('user')
+            .setDescription('Target')
+        )
     )
     .addSubcommand(subcmd => 
         subcmd.setName('remove')
@@ -60,7 +68,13 @@ module.exports = {
         switch (subcmd) {
             case 'add':
                 if(!triggers[interaction.guild.id]) triggers[interaction.guild.id] = {}
-                triggers[interaction.guild.id][interaction.options.getString('trigger')] = { creator: interaction.user.id, msg: interaction.options.getString('msg'), probability: interaction.options.getInteger('probability') || 100}
+                triggers[interaction.guild.id][interaction.options.getString('trigger')] = {
+                    creator: interaction.user.id,
+                    msg: interaction.options.getString('msg'),
+                    probability: interaction.options.getInteger('probability') || 100,
+                    user: interaction.options.getUser('user')?.id || null,
+                    cooldown: interaction.options.getInteger('cooldown')
+                }
                 interaction.reply({ flags: [MessageFlags.Ephemeral], content: 'Adicionado a tag com sucesso!'})
                 break;
             case 'remove':
