@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, AttachmentBuilder, MessageFlags } = require('discord.js');
 
-const executePython = require('../../functions/createPythonPromise.js')
+const executePython = require('../../utils/createPythonPromise.js')
 
 module.exports = {
     data: new SlashCommandBuilder()

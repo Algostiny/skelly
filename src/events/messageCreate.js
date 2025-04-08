@@ -23,12 +23,17 @@ module.exports = {
 
         //
 
-        if (msg.author.id == process.env.OWNERID && msg.content.indexOf('<ia>') != -1) {
-            return msg.reply(await require('../functions/geminiApi.js').sendPost(msg.content.replace('<ia>', '')))
+        if(msg.author.id != process.env.OWNERID) return;
+        if (msg.content.indexOf('<ia>') != -1) {
+            return msg.reply(await require('../functions/iaApis.js').genText(msg.content.replace('<ia>', '')))
         }
-        else if (msg.author.id == process.env.OWNERID && msg.content.indexOf('<imageia>') != -1) {
-            let attach = new AttachmentBuilder(await require('../functions/geminiApi.js').genImage(msg.content.replace('<imageia>','')), {name: 'teste.png'})
+        else if (msg.content.indexOf('<imageia>') != -1) {
+            let attach = new AttachmentBuilder(await require('../functions/iaApis.js').genImage(msg.content.replace('<imageia>','')), {name: 'teste.png'})
             return msg.reply({ files: [attach]} )
+        }
+        else if (msg.content.indexOf('<sentimentia>') != -1) {
+            let r = await require('../functions/iaApis.js').detectSentiment(msg.content.replace('<sentimentia>',''))
+            return msg.reply({ content: `Essa mensagem é ${`${r.result[1].score*100}`.substring(0,4)}% amigável e ${`${r.result[0].score*100}`.substring(0,4)}% negativa` } )
         }
     }
 };

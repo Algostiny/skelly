@@ -5,6 +5,7 @@ module.exports = {
         .setName('bet')
         .setDescription('Bet and play..')
         .setNameLocalization('pt-BR', 'apostar')
+        .setDescriptionLocalization('pt-BR', 'Aposte e jogue')
         .addSubcommand(cmd =>
             cmd.setName('coinflip')
                 .setDescription('Choose face or crown and roll a coin')
