@@ -1,22 +1,33 @@
 class Power {
     constructor ({lvl=1, effects=[]}) {
         this.effects = effects
+        this.lvl = lvl
 
-        this.hp = calcHP()
+        this.hp = this.calcHP()
         this.maxHp = this.hp
-        this.mp = calcMP()
+        this.mp = this.calcMP()
         this.maxMp = this.mp
 
-        this.lvl = lvl
         this.log = []
     }
 
-    calcHP() {
-        let q = Math.floor(Math.sqrt(this.stats.str + this.stats.def + this.stats.spd))
+    get stats() {
+        return this.constructor.stats
+    }
+    get attacks() {
+        return this.constructor.attacks
+    }
+    get passives() {
+        return this.constructor.passives
+    }
+
+    calcMP() {
+        let q = Math.floor(Math.sqrt(this.stats.str + this.stats.def + this.stats.spd)) + this.lvl
         return 75 + Math.floor(q * 0.2) * 5
     }
     calcHP() {
         let q = Math.round(this.lvl*Math.pow(this.stats.def, 0.8)*0.1+ Math.pow(this.stats.def, 0.9))
+        // console.log(this.lvl)
         return 50 + Math.floor(q * 0.2) * 5
     }
 

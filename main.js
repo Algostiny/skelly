@@ -13,9 +13,24 @@ require('./src/utils/databaseManager.js').startDb()
 // require('./src/functions/databaseManager.js').addUser({id:'algostiny'})
 // require('./src/utils/databaseManager.js').addPowerToUser({id:'712389918877286450'},'sp')
 // console.log(require('./src/functions/databaseManager.js').getPowerList())
-// require('./src/functions/databaseManager.js').updateUserPower({id:'algostiny'},1,{ mod_hp: 1 })
-require('./src/utils/databaseManager.js').updateUserPower({id:'712389918877286450'},"sp",{lvl: 25})
+// require('./src/functions/databaseManager.js').updateUserPower({id:'algostiny'},1,{ mod_hp:  })
+// require('./src/utils/databaseManager.js').updateUserPower({id:'712389918877286450'},"1",{lvl: 100})
 // console.log(require('./src/functions/databaseManager.js').getUserPowers({id:'algostiny'}))
+
+const Duel = require('./src/lib/rpg/Duel.js')
+const Power1 = new (require('./src/lib/rpg/powers/Star_Platinum.js'))({lvl:5})
+const Power2 = new (require('./src/lib/rpg/powers/Big_Mom.js'))({lvl:5})
+const fight = new Duel(Power1,Power2)
+
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+fight.runTurn({ type: "move", id: fight.powers[0].attacks.barrage.id})
+
+console.log(fight.log)
+// console.log(fight.log[fight.log.length-1])
 
 client.login(process.env.TOKEN); // make login
 

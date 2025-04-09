@@ -29,11 +29,11 @@ module.exports = {
                 power_id TEXT NOT NULL,
                 id INTEGER NOT NULL DEFAULT 0,
 
-                mod_hp INTEGER DEFAULT 1,
-                mod_str INTEGER DEFAULT 1,
-                mod_def INTEGER DEFAULT 1,
-                mod_spd INTEGER DEFAULT 1,
-                mod_pre INTEGER DEFAULT 1,
+                mod_hp INTEGER DEFAULT 0,
+                mod_str INTEGER DEFAULT 0,
+                mod_def INTEGER DEFAULT 0,
+                mod_spd INTEGER DEFAULT 0,
+                mod_pre INTEGER DEFAULT 0,
                 nature INTEGER DEFAULT 1,
 
                 lvl INTEGER DEFAULT 1,
@@ -126,7 +126,7 @@ module.exports = {
                 ${nature ? `nature   = ${nature}` : ''}
                 ${xp ? `xp       = ${xp}` : ''}
                 ${lvl ? `lvl      = ${lvl}` : ''}
-                WHERE user_id = ? AND power_id = ?
+                WHERE user_id = ? AND id = ?
             `)
 
             q.run(user.id, powerId)

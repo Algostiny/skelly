@@ -10,17 +10,11 @@ const ObtainMethodFlags = {
     1: 'Arrow'
 }
 const NatureFlags = {
-    1: {
-        name: 'Abissal',
-        description: 'Utiliza as energias do vazio e..',
+    1: { // normal
+        name: 'Normal',
+        description: 'O básico, as vezes bem feito',
         effect: (power) => {
-            let newPower = power
-            newPower.str *= 1.25
-            newPower.def /= 1.25
-
-            newPower.str = Math.round(newPower.str)
-            newPower.def = Math.round(newPower.def)
-            return newPower
+            return power
         }
     },
     2: 'Cursed',
@@ -40,7 +34,8 @@ function calcHP(stats,lvl) {
 }
 
 const Powers = {
-    sp: require('./powers/Star_Platinum.js')
+    sp: require('./powers/Star_Platinum.js'),
+    bigmom: require('./powers/Big_Mom.js'),
 }
 
 function getPowerInfo(powerPrefix) {
@@ -48,13 +43,15 @@ function getPowerInfo(powerPrefix) {
 }
 
 function getUserPowerInfo(power) {
-    let power_info = powers[power.power_id]
+    let power_info = Powers[power.power_id]
     if(!power_info) return null;
 
     let data = new Date(power.obtained_at)
     let atks = []
-    for (let i = 0; i < Object.keys(power_info.attacks).length; i++) {
-        let atk = power_info.attacks[i]
+
+    let k = Object.keys(power_info.attacks)
+    for (let i = 0; i < k.length; i++) {
+        let atk = power_info.attacks[k[i]]
         atks.push(atk)
     }
 
@@ -64,11 +61,11 @@ function getUserPowerInfo(power) {
         description: power_info.description,
         prefix: power_info.prefix,
 
-        hp: power.mod_hp + power_info.status.hp,
-        str: power.mod_str + power_info.status.str,
-        def: power.mod_def + power_info.status.def,
-        spd: power.mod_spd + power_info.status.spd,
-        pre: power.mod_pre + power_info.status.pre,
+        hp: power.mod_hp + calcHP(power_info.stats,power.lvl),
+        str: power.mod_str + power_info.stats.str,
+        def: power.mod_def + power_info.stats.def,
+        spd: power.mod_spd + power_info.stats.spd,
+        pre: 0,//power.mod_pre + power_info.stats.pre,
 
         atks,
         color: power_info.color,
